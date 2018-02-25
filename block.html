@@ -1,0 +1,87 @@
+<!DOCTYPE HTML>
+<!-- NPC -->
+<html>
+<head>
+<title>a block</title>
+<script>
+
+var LEN=20;
+
+var x=500
+var y=300;
+var LEFT=0,RIGHT=1,UP=2,DOWN=3;
+var MOVECONST=1;
+var dir=LEFT
+var turn=0;
+var NUMTURNS=100;
+
+function setDirection()
+{
+	turn++;
+	if(turn==NUMTURNS)
+	{
+		dir=parseInt(Math.random()*4);
+		turn=0;
+	}
+}
+
+function randomMove()
+{
+	setDirection();
+	if(dir==LEFT)
+		x-=MOVECONST;
+	else
+	if(dir==RIGHT)
+		x+=MOVECONST;
+	else
+	if(dir==UP)
+		y-=MOVECONST;
+	else
+	if(dir==DOWN)
+		y+=MOVECONST;
+
+	if(y<0)
+		y=0;
+	if(y>500)
+		y=500;
+	if(x<0)
+		x=0;
+	if(x>1000)
+		x=1000;		
+}
+
+function drawRect(x,y)
+{
+	
+	var can=document.getElementById("can");
+	var ctx=can.getContext("2d");
+	ctx.fillStyle="purple";
+	ctx.fillRect(x,y,LEN,LEN);
+}
+
+function clean()
+{
+	var can=document.getElementById("can");
+	can.getContext("2d").clearRect(0,0,5000,5000);
+}
+
+function execute()
+{
+	randomMove();
+	clean();
+	drawRect(x,y);
+}
+
+</script>
+
+</head>
+<body>
+
+<canvas id="can" width="1000" height="1000"></canvas>
+
+<script>
+	var timer=setInterval(function(){execute();},5);
+</script>
+
+</body>
+</html>
